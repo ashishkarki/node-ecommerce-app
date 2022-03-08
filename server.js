@@ -14,6 +14,9 @@ app.options('*', tors()) // enable options request be sent from the browser
 app.use(express.json())
 app.use(morgan('dev'))
 
+// serve static files
+app.use(express.static('public'))
+
 // routers
 const urlPrefix = process.env.EXPRESS_API_URL_PREFIX || '/api'
 

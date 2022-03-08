@@ -9,9 +9,12 @@ const ProductList = () => {
             <h3>Products</h3>
             <ul>
                 {products.data.map((product) => (
-                    <li key={product.id}>
+                    <li key={product._id}>
                         <h4>{product.name}</h4>
-                        <img src={product.image} alt={product.name} />
+                        <img
+                            src={product.image.replace(':3000/public', ':5001')}
+                            alt={product.name}
+                        />
                         <p>{product.countInStock} in stock</p>
                     </li>
                 ))}
