@@ -2,7 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const tors = require('cors')
 
-const { lg } = require('./constants')
+const { lg, COMPONENT_PATHS } = require('./constants')
 
 // the express app
 const app = express()
@@ -20,7 +20,14 @@ app.use(express.static('public'))
 // routers
 const urlPrefix = process.env.EXPRESS_API_URL_PREFIX || '/api'
 
+// products router
 const productRouter = require('./routes/product')
-app.use(`${urlPrefix}`, productRouter)
+const productRoute = `${urlPrefix}${COMPONENT_PATHS.PRODUCTS}`
+app.use(productRoute, productRouter)
+
+// categories router
+const categoryRouter = require('./routes/categories')
+const categoryRoute = `${urlPrefix}${COMPONENT_PATHS.CATEGORIES}`
+app.use(categoryRoute, categoryRouter)
 
 module.exports = app

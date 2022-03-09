@@ -10,6 +10,9 @@ const COMPONENT_PATHS = {
     HOME: '/',
     PRODUCTS: '/products',
     PRODUCT: '/products/:id',
+    CATEGORIES: '/categories',
+    CATEGORY: '/categories/:id',
+    ORDER: '/orders/:id',
 }
 
 // functions

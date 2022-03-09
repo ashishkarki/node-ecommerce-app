@@ -1,7 +1,7 @@
 const express = require('express')
 const { StatusCodes } = require('http-status-codes')
 
-const { COMPONENT_PATHS, responseBuilder } = require('../constants')
+const { responseBuilder } = require('../constants')
 
 const ProductModel = require('../models/product')
 
@@ -9,14 +9,8 @@ const ProductModel = require('../models/product')
 const productRouter = express.Router()
 
 // routes
-// root route
-productRouter.get(`/`, (req, res) => {
-    // lg(`api url: ${process.env.EXPRESS_API_URL_PREFIX}`)
-    res.send('node e-commerce api backend')
-})
-
 // get all products
-productRouter.get(`${COMPONENT_PATHS.PRODUCTS}`, async (req, res) => {
+productRouter.get(`/`, async (req, res) => {
     try {
         const allProducts = await ProductModel.find()
 
@@ -27,7 +21,7 @@ productRouter.get(`${COMPONENT_PATHS.PRODUCTS}`, async (req, res) => {
 })
 
 // get a product by id
-productRouter.get(`${COMPONENT_PATHS.PRODUCT}`, async (req, res) => {
+productRouter.get(`/:id`, async (req, res) => {
     try {
     } catch (err) {
         responseBuilder(res, StatusCodes.INTERNAL_SERVER_ERROR, [], true, err)
@@ -35,7 +29,7 @@ productRouter.get(`${COMPONENT_PATHS.PRODUCT}`, async (req, res) => {
 })
 
 // post a new product
-productRouter.post(`${COMPONENT_PATHS.PRODUCTS}`, async (req, res) => {
+productRouter.post(`/`, async (req, res) => {
     const { name, image, countInStock } = req.body
 
     const newProduct = new ProductModel({
