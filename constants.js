@@ -5,6 +5,14 @@ const lg = console.log
 const blueBgWhite = ck.blue.bgWhiteBright
 const redBgGray = ck.red.bgGray
 
+// sub-paths
+const COMPONENT_PATHS = {
+    HOME: '/',
+    PRODUCTS: '/products',
+    PRODUCT: '/products/:id',
+}
+
+// functions
 const responseBuilder = (
     res = {},
     statusCode = StatusCodes.OK,
@@ -28,6 +36,8 @@ const responseBuilder = (
 module.exports = {
     ck,
     lg,
+
+    COMPONENT_PATHS,
 
     blueBgWhite,
     redBgGray,
