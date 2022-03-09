@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { MONGOOSE_MODEL_NAMES } = require('../constants')
 
 const categorySchema = new mongoose.Schema({
     name: {
@@ -21,4 +22,7 @@ categorySchema.set('toJSON', {
     virtuals: true,
 })
 
-exports.Category = mongoose.model('Category', categorySchema)
+exports.CategoryModel = mongoose.model(
+    MONGOOSE_MODEL_NAMES.CATEGORY,
+    categorySchema
+)

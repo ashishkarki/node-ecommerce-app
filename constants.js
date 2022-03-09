@@ -15,6 +15,12 @@ const COMPONENT_PATHS = {
     ORDER: '/orders/:id',
 }
 
+// model string names
+const MONGOOSE_MODEL_NAMES = {
+    PRODUCT: 'Product',
+    CATEGORY: 'Category',
+}
+
 // functions
 const responseBuilder = (
     res = {},
@@ -41,6 +47,7 @@ module.exports = {
     lg,
 
     COMPONENT_PATHS,
+    MONGOOSE_MODEL_NAMES,
 
     blueBgWhite,
     redBgGray,

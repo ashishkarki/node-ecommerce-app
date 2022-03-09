@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+const { MONGOOSE_MODEL_NAMES } = require('../constants')
+
 const productSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -33,7 +35,7 @@ const productSchema = new mongoose.Schema({
     },
     category: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
+        ref: MONGOOSE_MODEL_NAMES.CATEGORY,
         required: true,
     },
     countInStock: {
@@ -61,6 +63,6 @@ const productSchema = new mongoose.Schema({
     },
 })
 
-const ProductModel = mongoose.model('Product', productSchema)
+const ProductModel = mongoose.model(MONGOOSE_MODEL_NAMES.PRODUCT, productSchema)
 
 module.exports = ProductModel
