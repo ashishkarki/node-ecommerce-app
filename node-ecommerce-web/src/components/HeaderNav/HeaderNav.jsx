@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import styles from './HeaderNav.module.css'
 
 const HeaderNav = () => {
@@ -7,13 +9,18 @@ const HeaderNav = () => {
                 Node/Express e-commerce shop
             </h2>
 
-            <nav className="md:ml-28 flex justify-evenly">
-                <a href="/" className={styles.navItems}>
+            <nav className="md:ml-28 flex justify-around">
+                <Link to="/" className={styles.navItems}>
                     Home
-                </a>
-                <a href="/products" className={styles.navItems}>
+                </Link>
+
+                <Link to="/products" className={styles.navItems}>
                     Products
-                </a>
+                </Link>
+
+                <Link to="/categories" className={styles.navItems}>
+                    Categories
+                </Link>
             </nav>
         </header>
     )

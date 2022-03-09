@@ -15,18 +15,35 @@ const ProductList = () => {
                         key={product._id}
                         className="rounded-lg grid grid-cols-1 md:grid-cols-2 border-2 border-sky-600 my-2 p-2 bg-slate-100"
                     >
-                        <div>
+                        <div className="flex flex-col justify-between items-center">
                             <h4 className="font-semibold">{product.name}</h4>
+
+                            <p className="mt-3 bg-gray-200 px-2 w-5/6">
+                                <span className="text-blue-500">
+                                    {' '}
+                                    ${product.price}{' '}
+                                </span>{' '}
+                                per item
+                            </p>
+
                             <p className="mt-3 italic">
                                 {product.countInStock} in stock
                             </p>
                         </div>
 
-                        <img
-                            src={product.image.replace(':3000/public', ':5001')}
-                            alt={product.name}
-                            className="w-1/3 md:w-1/2 object-cover"
-                        />
+                        {product.image && (
+                            <div className="flex justify-center items-center">
+                                {' '}
+                                <img
+                                    src={product.image.replace(
+                                        ':3000/public',
+                                        ':5001'
+                                    )}
+                                    alt={product.name}
+                                    className="w-1/3 md:w-1/2 object-cover"
+                                />
+                            </div>
+                        )}
                     </li>
                 ))}
             </ul>
