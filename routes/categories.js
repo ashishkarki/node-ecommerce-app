@@ -2,7 +2,7 @@ const express = require('express')
 const { StatusCodes } = require('http-status-codes')
 const { responseBuilder } = require('../constants')
 
-const { CategoryModel: Category } = require('../models/category')
+const { Category, CategoryModel } = require('../models/category')
 
 // category router
 const categoryRouter = express.Router()
@@ -10,7 +10,7 @@ const categoryRouter = express.Router()
 // routes
 // get all categories
 categoryRouter.get('/', async (req, res) => {
-    const categoriesList = await Category.find()
+    const categoriesList = await CategoryModel.find()
 
     if (!categoriesList) {
         return responseBuilder(res, StatusCodes.NOT_FOUND, [], true, {
@@ -26,7 +26,7 @@ categoryRouter.get('/:id', async (req, res) => {
     const { id } = req.params
 
     try {
-        const category = await Category.findById(id)
+        const category = await CategoryModel.findById(id)
 
         if (!category) {
             return responseBuilder(res, StatusCodes.NOT_FOUND, [], true, {
@@ -50,7 +50,7 @@ categoryRouter.get('/:id', async (req, res) => {
 categoryRouter.post('/', async (req, res) => {
     const { name, icon, color } = req.body
 
-    const newCategory = new Category({
+    const newCategory = new CategoryModel({
         name,
         icon,
         color,
@@ -78,7 +78,7 @@ categoryRouter.put('/:id', async (req, res) => {
     const { name, icon, color } = req.body
 
     try {
-        const category = await Category.findById(id)
+        const category = await CategoryModel.findById(id)
 
         if (!category) {
             return responseBuilder(res, StatusCodes.NOT_FOUND, [], true, {
@@ -109,7 +109,7 @@ categoryRouter.delete('/:id', async (req, res) => {
     const { id } = req.params
 
     try {
-        const deletedCategory = await Category.findByIdAndDelete(id)
+        const deletedCategory = await CategoryModel.findByIdAndDelete(id)
 
         if (!deletedCategory) {
             return responseBuilder(res, StatusCodes.NOT_FOUND, [], true, {

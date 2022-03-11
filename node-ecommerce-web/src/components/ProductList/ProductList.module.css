@@ -1,0 +1,7 @@
+.subDetails {
+    @apply bg-gray-200 px-2;
+}
+
+.borderRound {
+    @apply rounded-lg border-2 border-sky-600;
+}
