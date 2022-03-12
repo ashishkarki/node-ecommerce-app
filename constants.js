@@ -30,10 +30,13 @@ const responseBuilder = (
     errObj = {}
 ) => {
     if (!isError) {
-        return res.status(statusCode).json({
-            data: respObj,
-            success: true,
-        })
+        return res.status(statusCode).json(
+            respObj
+            //     {
+            //     data: respObj,
+            //     success: true,
+            // }
+        )
     } else {
         return res.status(statusCode).json({
             error: errObj.message,

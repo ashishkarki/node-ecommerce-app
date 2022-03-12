@@ -1,11 +1,20 @@
 import { useAtom } from 'jotai'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { categoriesAtom, deleteCategoryAtom } from '../../atoms/categoriesAtom'
+import { useStore } from '../../stores/categoriesStore'
 import ReactTable from '../ReactTable/ReactTable'
 
 const CategoryList = () => {
-    const [categories] = useAtom(categoriesAtom)
-    const [, compute] = useAtom(deleteCategoryAtom)
+    // const [categories] = useAtom(categoriesAtom)
+    // const [, compute] = useAtom(deleteCategoryAtom)
+
+    const categories = useStore((state) => state.categories)
+    const initCategories = useStore((state) => state.initCategories)
+    const deleteCategory = useStore((state) => state.deleteCategory)
+
+    useEffect(() => {
+        initCategories()
+    }, [])
 
     // columns to be display in ReactTable
     const columns = React.useMemo(() => [
@@ -37,7 +46,8 @@ const CategoryList = () => {
                         className="bg-green-400 p-1 ash-rounded"
                         onClick={() => {
                             console.log('delete:', { value })
-                            compute(value)
+                            // compute(value)
+                            deleteCategory(value)
                         }}
                     >
                         Delete
@@ -49,7 +59,7 @@ const CategoryList = () => {
 
     return (
         <div>
-            <ReactTable columns={columns} data={categories.data} />
+            <ReactTable columns={columns} data={categories} />
         </div>
     )
 }
