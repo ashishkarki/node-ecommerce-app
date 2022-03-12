@@ -1,10 +1,9 @@
 import { atom } from 'jotai'
-
-const URL = `/api/v1/ecommerce/products/`
+import { URLs } from '../../constants-web'
 
 export const productsAtom = atom(async () => {
     try {
-        const response = await fetch(URL)
+        const response = await fetch(URLs.PRODUCTS)
         const data = await response.json()
 
         return data

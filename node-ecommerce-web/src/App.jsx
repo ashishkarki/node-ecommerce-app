@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 
 import './App.css'
+import CategoryList from './components/CategoryList/CategoryList'
 import HeaderNav from './components/HeaderNav/HeaderNav'
 import Home from './components/Home/Home'
 import ProductDetails from './components/ProductDetails/ProductDetails'
@@ -16,11 +17,15 @@ function App() {
             <div className="ash-border ash-rounded mx-6 p-2">
                 <Routes>
                     <Route path="/" element={<Home />} />
+
                     <Route path="/products" element={<ProductList />} />
                     <Route
                         path="/products/:productId"
                         element={<ProductDetails />}
                     />
+
+                    <Route path="/categories" element={<CategoryList />} />
+
                     <Route
                         path="*"
                         element={<p>There's nothing here: 404!</p>}
