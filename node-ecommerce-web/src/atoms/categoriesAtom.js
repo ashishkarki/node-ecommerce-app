@@ -1,4 +1,5 @@
-import { atom } from 'jotai'
+import { atom, useAtom } from 'jotai'
+import { atomWithReducer, useReducerAtom } from 'jotai/utils'
 import { ACTIONS, URLs } from '../../constants-web'
 
 export const categoriesAtom = atom(async () => {
@@ -14,6 +15,55 @@ export const categoriesAtom = atom(async () => {
     }
 })
 
+export const deleteCategoriesAtom = atom(null, async (get, set, deletedId) => {
+    // update DB
+    await deleteCategoryById(deletedId)
+
+    // update state
+    const categories = get(categoriesAtom)
+    const categoriesWithNew = categories.data.filter(
+        (category) => category.id !== deletedId
+    )
+
+    set(categoriesAtom, categoriesWithNew)
+})
+
+export const categoriesReducer = (state, { type, payload }) => {
+    console.log('categories reducer :>> ', JSON.stringify(state))
+    const { data, success } = state
+    const [categories, compute] = useAtom(rwCategoriesAtom)
+
+    switch (type) {
+        case ACTIONS.DELETE:
+            compute(payload)
+        case ACTIONS.EDIT:
+            return {
+                ...state,
+                data: state.data.map((category) => {
+                    if (category.id === payload.id) {
+                        return payload
+                    }
+                    return category
+                }),
+            }
+        default:
+            return state
+    }
+}
+
+// export const categoriesAtomWithReducer = atomWithReducer(async () => {
+//     try {
+//         const response = await fetch(URLs.CATEGORIES)
+//         const data = await response.json()
+
+//         return data
+//     } catch (err) {
+//         console.log(
+//             `Ecommerce Web => error fetching categories: ${err.message}`
+//         )
+//     }
+// }, categoriesReducer)
+
 // which category id is currently acted upon
 export const categoryIdAtom = atom('')
 // what actions to be performed on the category
@@ -28,7 +78,7 @@ export const updatedCategoriesAtom = atom((get) => {
 
         if (action === ACTIONS.DELETE) {
             // first, actually delete the category from DB
-            deleteCategory(categoryId)
+            deleteCategoryById(categoryId)
 
             // update the state of categories
             return categories.filter((category) => {
@@ -53,7 +103,7 @@ export const updatedCategoriesAtom = atom((get) => {
 })
 
 // Helper functions
-const deleteCategory = async (id) => {
+export const deleteCategoryById = async (id) => {
     try {
         const response = await fetch(`${URLs.CATEGORIES}${id}`, {
             method: 'DELETE',
