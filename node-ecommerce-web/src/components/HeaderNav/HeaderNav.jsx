@@ -4,8 +4,8 @@ import styles from './HeaderNav.module.css'
 
 const HeaderNav = () => {
     return (
-        <header className="rounded-lg border border-sky-600 m-6 py-2 bg-slate-300 grid grid-cols-1 md:grid-cols-2 gap-1">
-            <h2 className="font-semibold text-2xl capitalize pl-4">
+        <header className="py-2 ash-bg grid grid-cols-1 md:grid-cols-2 gap-1">
+            <h2 className="font-semibold text-2xl capitalize pl-4 ash-bg ash-txt">
                 Node/Express e-commerce shop
             </h2>
 

@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* // common css */
+@layer components {
+    .ash-rounded {
+        @apply rounded-lg;
+    }
+
+    .ash-border {
+        @apply border-2 border-sky-600;
+    }
+
+    .ash-bg {
+        @apply bg-slate-300;
+    }
+
+    .ash-txt {
+        @apply text-amber-600 underline;
+    }
+}
