@@ -1,3 +1,3 @@
 .navItems {
-    @apply p-2 hover:ring-2 hover:ring-slate-500 hover:rounded-lg;
+    @apply p-2 hover:ring-2 hover:ring-green-400 hover:rounded-lg active:ring-green-600;
 }
