@@ -1,11 +1,15 @@
-import { useAtom } from 'jotai'
-
 import styles from './ProductList.module.css'
-import { productsAtom } from '../../atoms/productsAtom'
 import ProductCard from '../ProductCard/ProductCard'
+import { useProductStore } from '../../stores/productStore'
+import { useEffect } from 'react'
 
 const ProductList = () => {
-    const [products] = useAtom(productsAtom)
+    const products = useProductStore((state) => state.products)
+    const initProducts = useProductStore((state) => state.initProducts)
+
+    useEffect(() => {
+        initProducts()
+    }, [])
 
     return (
         <main className="space-y-2">
@@ -16,8 +20,11 @@ const ProductList = () => {
             <hr className=" bg-slate-300" />
 
             <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
-                {products.data.map((product) => (
-                    <ProductCard product={product} key={product.id} />
+                {products.map((product) => (
+                    <ProductCard
+                        product={product}
+                        key={new Date() * Math.random() * Math.random()}
+                    />
                 ))}
             </ul>
         </main>
