@@ -1,16 +1,12 @@
-import { useAtom } from 'jotai'
 import React, { useEffect } from 'react'
-import { categoriesAtom, deleteCategoryAtom } from '../../atoms/categoriesAtom'
-import { useStore } from '../../stores/categoriesStore'
+
+import { useCategoryStore } from '../../stores/categoryStore'
 import ReactTable from '../ReactTable/ReactTable'
 
 const CategoryList = () => {
-    // const [categories] = useAtom(categoriesAtom)
-    // const [, compute] = useAtom(deleteCategoryAtom)
-
-    const categories = useStore((state) => state.categories)
-    const initCategories = useStore((state) => state.initCategories)
-    const deleteCategory = useStore((state) => state.deleteCategory)
+    const categories = useCategoryStore((state) => state.categories)
+    const initCategories = useCategoryStore((state) => state.initCategories)
+    const deleteCategory = useCategoryStore((state) => state.deleteCategory)
 
     useEffect(() => {
         initCategories()
@@ -36,17 +32,15 @@ const CategoryList = () => {
             Cell: ({ value }) => (
                 <div className="flex justify-evenly items-center">
                     <button
-                        className="bg-green-400 p-1 ash-rounded"
+                        className="bg-green-400 px-2 py-1 ash-rounded"
                         onClick={() => console.log('edit:', { value })}
                     >
                         Edit
                     </button>
 
                     <button
-                        className="bg-green-400 p-1 ash-rounded"
+                        className="bg-red-400 px-2 py-1 ash-rounded"
                         onClick={() => {
-                            console.log('delete:', { value })
-                            // compute(value)
                             deleteCategory(value)
                         }}
                     >

@@ -1,4 +1,5 @@
 import create from 'zustand'
+
 import { URLs } from '../../constants-web'
 
 const deleteCategory = async (id) => {
@@ -16,7 +17,7 @@ const deleteCategory = async (id) => {
     }
 }
 
-export const useStore = create((set) => ({
+const useStore = create((set) => ({
     categories: [],
     initCategories: async () => {
         const response = await fetch(URLs.CATEGORIES)
@@ -45,3 +46,5 @@ export const useStore = create((set) => ({
         }))
     },
 }))
+
+export const useCategoryStore = useStore
