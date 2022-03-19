@@ -8,3 +8,18 @@ export const ACTIONS = {
     EDIT: 'edit',
     NONE: 'none',
 }
+
+export const CATEGORIES_TABLE_COLUMNS = [
+    {
+        Header: 'Name',
+        accessor: 'name',
+    },
+    {
+        Header: 'Icon',
+        accessor: 'icon',
+    },
+    {
+        Header: 'Color',
+        accessor: 'color',
+    },
+]
