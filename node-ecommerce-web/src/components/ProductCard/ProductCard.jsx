@@ -9,12 +9,12 @@ const ProductCard = ({ product }) => {
                 <h4 className="font-semibold">{product.name}</h4>
 
                 <p className={`${styles.subDetails} w-5/6`}>
-                    <span className="text-blue-500">${product.price} </span>
+                    <span className="ash-txt-highlight">${product.price} </span>
                     per item
                 </p>
 
                 <p className={`${styles.subDetails} w-5/6`}>
-                    <span className="text-blue-500">
+                    <span className="ash-txt-highlight">
                         {product.countInStock}
                     </span>{' '}
                     in stock
@@ -24,7 +24,9 @@ const ProductCard = ({ product }) => {
                     className={`${styles.subDetails} text-ellipsis overflow-hidden w-full cursor-pointer hover:bg-amber-600`}
                 >
                     Cat ID:{' '}
-                    <span className="text-blue-500">{product.category}</span>
+                    <span className="ash-txt-highlight">
+                        {product.category}
+                    </span>
                 </p>
             </div>
 

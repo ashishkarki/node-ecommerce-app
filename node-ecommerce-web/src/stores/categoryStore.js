@@ -19,6 +19,7 @@ const deleteCategory = async (id) => {
 
 const useStore = create((set) => ({
     categories: [],
+    selectedCategory: null,
     initCategories: async () => {
         const response = await fetch(URLs.CATEGORIES)
         const data = await response.json()
@@ -50,7 +51,10 @@ const useStore = create((set) => ({
         const response = await fetch(`${URLs.CATEGORIES}${id}`)
         const category = await response.json()
 
-        return category
+        await set((state) => ({
+            ...state,
+            selectedCategory: category,
+        }))
     },
 }))
 
