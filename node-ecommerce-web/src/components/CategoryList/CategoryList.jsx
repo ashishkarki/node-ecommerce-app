@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { CATEGORIES_TABLE_COLUMNS } from '../../../constants-web'
+import { CATEGORIES_TABLE_COLUMNS, FORM_MODE } from '../../../constants-web'
 import { useCategoryStore } from '../../stores/categoryStore'
 import { useUserStore } from '../../stores/userStore'
 import ReactTable from '../ReactTable/ReactTable'
@@ -33,7 +33,9 @@ const CategoryList = () => {
                               className="bg-green-400 px-2 py-1 ash-rounded"
                               onClick={() => {
                                   console.log('edit:', { value })
-                                  navigate(`/categories/${value}/edit`)
+                                  navigate(
+                                      `/categories/${value}/${FORM_MODE.EDIT}`
+                                  )
                               }}
                           >
                               Edit

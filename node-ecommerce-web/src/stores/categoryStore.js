@@ -45,6 +45,13 @@ const useStore = create((set) => ({
             ),
         }))
     },
+
+    getCategoryById: async (id) => {
+        const response = await fetch(`${URLs.CATEGORIES}${id}`)
+        const category = await response.json()
+
+        return category
+    },
 }))
 
 export const useCategoryStore = useStore
