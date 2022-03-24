@@ -14,7 +14,7 @@ const productRouter = express.Router()
 productRouter.get(`/`, async (req, res) => {
     try {
         const allProducts = await ProductModel.find().select(
-            'name category price image countInStock -_id'
+            'id name description category price image countInStock brand rating numReviews isFeatured'
         )
 
         responseBuilder(res, StatusCodes.OK, allProducts)

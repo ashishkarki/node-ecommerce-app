@@ -1,16 +1,25 @@
 import React, { useEffect } from 'react'
-import { CATEGORIES_TABLE_COLUMNS } from '../../../constants-web'
+import { useNavigate } from 'react-router-dom'
 
+import { CATEGORIES_TABLE_COLUMNS, FORM_MODE } from '../../../constants-web'
 import { useCategoryStore } from '../../stores/categoryStore'
 import { useUserStore } from '../../stores/userStore'
 import ReactTable from '../ReactTable/ReactTable'
 
 const CategoryList = () => {
+    // the navigation
+    const navigate = useNavigate()
+
+    // the stores
     const categories = useCategoryStore((state) => state.categories)
     const initCategories = useCategoryStore((state) => state.initCategories)
     const deleteCategory = useCategoryStore((state) => state.deleteCategory)
-
     const isAdminUser = useUserStore((state) => state.isAdmin)
+
+    const deleteCategoryWithConfirmation = (catIdToDelete) => {
+        confirm('Are you sure you want to delete this category?') &&
+            deleteCategory(catIdToDelete)
+    }
 
     useEffect(() => {
         initCategories()
@@ -27,7 +36,12 @@ const CategoryList = () => {
                       <div className="flex justify-evenly items-center">
                           <button
                               className="bg-green-400 px-2 py-1 ash-rounded"
-                              onClick={() => console.log('edit:', { value })}
+                              onClick={() => {
+                                  console.log('edit:', { value })
+                                  navigate(
+                                      `/categories/${value}/${FORM_MODE.EDIT}`
+                                  )
+                              }}
                           >
                               Edit
                           </button>
@@ -35,7 +49,7 @@ const CategoryList = () => {
                           <button
                               className="bg-red-400 px-2 py-1 ash-rounded"
                               onClick={() => {
-                                  deleteCategory(value)
+                                  deleteCategoryWithConfirmation(value)
                               }}
                           >
                               Delete
@@ -53,6 +67,18 @@ const CategoryList = () => {
 
     return (
         <div>
+            {isAdminUser && (
+                <button
+                    type="submit"
+                    className="bg-green-400 px-2 py-1 mb-2 ash-rounded float-right"
+                    onClick={() =>
+                        navigate(`/categories/null/${FORM_MODE.CREATE}`)
+                    }
+                >
+                    Add Category
+                </button>
+            )}
+
             <ReactTable columns={columns} data={categories} />
         </div>
     )

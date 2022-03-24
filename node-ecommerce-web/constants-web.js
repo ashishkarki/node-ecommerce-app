@@ -23,3 +23,8 @@ export const CATEGORIES_TABLE_COLUMNS = [
         accessor: 'color',
     },
 ]
+
+export const FORM_MODE = {
+    CREATE: 'create',
+    EDIT: 'edit',
+}
