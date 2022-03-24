@@ -67,13 +67,17 @@ const CategoryList = () => {
 
     return (
         <div>
-            <button
-                type="submit"
-                className="bg-green-400 px-2 py-1 mb-2 ash-rounded float-right"
-                onClick={() => navigate(`/categories/null/${FORM_MODE.CREATE}`)}
-            >
-                Add Category
-            </button>
+            {isAdminUser && (
+                <button
+                    type="submit"
+                    className="bg-green-400 px-2 py-1 mb-2 ash-rounded float-right"
+                    onClick={() =>
+                        navigate(`/categories/null/${FORM_MODE.CREATE}`)
+                    }
+                >
+                    Add Category
+                </button>
+            )}
 
             <ReactTable columns={columns} data={categories} />
         </div>

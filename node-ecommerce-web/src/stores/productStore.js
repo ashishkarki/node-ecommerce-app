@@ -1,9 +1,10 @@
 import create from 'zustand'
-
-import { URLs } from '../../constants-web'
+import { getAllProducts, getProductById } from '../services/product.service'
 
 const useStore = create((set) => ({
     products: [],
+    selectedProduct: null,
+
     initProducts: async () => {
         const products = await getAllProducts()
 
@@ -12,17 +13,15 @@ const useStore = create((set) => ({
             products,
         }))
     },
+
+    getProductById: async (id) => {
+        const selectedProduct = await getProductById(id)
+
+        await set((state) => ({
+            ...state,
+            selectedProduct,
+        }))
+    },
 }))
-
-const getAllProducts = async () => {
-    try {
-        const response = await fetch(URLs.PRODUCTS)
-        const data = await response.json()
-
-        return data
-    } catch (err) {
-        console.log(`Ecommerce Web => error fetching products: ${err.message}`)
-    }
-}
 
 export const useProductStore = useStore

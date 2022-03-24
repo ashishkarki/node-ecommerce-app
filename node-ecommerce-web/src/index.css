@@ -12,8 +12,16 @@
         @apply border-2 border-sky-600;
     }
 
+    .ash-border-thick {
+        @apply border-4  border-sky-800;
+    }
+
     .ash-bg {
         @apply bg-slate-300;
+    }
+
+    .ash-bg-light {
+        @apply bg-slate-200;
     }
 
     .ash-txt {

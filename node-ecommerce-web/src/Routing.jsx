@@ -11,11 +11,12 @@ const Routing = () => {
         <Routes>
             <Route path="/" element={<Home />} />
 
+            {/* Products */}
             <Route path="/products" element={<ProductList />} />
             <Route path="/products/:productId" element={<ProductDetails />} />
 
+            {/* Categories */}
             <Route path="/categories" element={<CategoryList />} />
-
             <Route
                 path="/categories/:categoryId/:formMode"
                 element={<CategoryReactForm />}
