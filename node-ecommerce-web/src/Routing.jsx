@@ -4,7 +4,7 @@ import CategoryList from './components/CategoryList/CategoryList'
 import Home from './components/Home/Home'
 import ProductDetails from './components/ProductDetails/ProductDetails'
 import ProductList from './components/ProductList/ProductList'
-import ReactForm from './components/ReactForm/ReactForm'
+import CategoryReactForm from './components/ReactForm/CategoryReactForm'
 
 const Routing = () => {
     return (
@@ -18,7 +18,7 @@ const Routing = () => {
 
             <Route
                 path="/categories/:categoryId/:formMode"
-                element={<ReactForm />}
+                element={<CategoryReactForm />}
             />
 
             <Route path="*" element={<p>There's nothing here: 404!</p>} />

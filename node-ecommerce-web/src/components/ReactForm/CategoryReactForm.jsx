@@ -4,9 +4,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { CATEGORIES_TABLE_COLUMNS, FORM_MODE } from '../../../constants-web'
 import { useCategoryStore } from '../../stores/categoryStore'
 
-import styles from './ReactForm.module.css'
+import styles from './CategoryReactForm.module.css'
 
-const ReactForm = () => {
+const CategoryReactForm = () => {
     // router related
     const { categoryId, formMode } = useParams()
     const navigate = useNavigate()
@@ -17,6 +17,10 @@ const ReactForm = () => {
     // zustand state related
     const getCategoryById = useCategoryStore((state) => state.getCategoryById)
     const selectedCategory = useCategoryStore((state) => state.selectedCategory)
+    const setSelectedCategory = useCategoryStore(
+        (state) => state.setSelectedCategory
+    )
+    const addCategory = useCategoryStore((state) => state.addCategory)
     const updateCategory = useCategoryStore((state) => state.updateCategory)
 
     // get field names (from Db) for the columns of category table
@@ -24,12 +28,27 @@ const ReactForm = () => {
         (column) => column.accessor
     )
 
-    const onSubmit = (categoryToUpdate) => {
-        console.log('update category data :>> ', categoryToUpdate)
-        updateCategory(categoryId, categoryToUpdate)
+    const goBackToCategoryForm = () => {
+        navigate('/categories')
+    }
+
+    const onSubmit = (categoryFromForm) => {
+        console.log(`edit or create: ${formMode}`)
+
+        if (formMode === FORM_MODE.EDIT) {
+            updateCategory(categoryId, categoryFromForm)
+        } else {
+            // everything else will be considered as create
+            addCategory(categoryFromForm)
+        }
+
+        // reset selectedCategory if set
+        if (selectedCategory) {
+            setSelectedCategory(null)
+        }
 
         // go back to categoryList table
-        navigate('/categories')
+        goBackToCategoryForm()
     }
 
     useEffect(() => {
@@ -42,6 +61,10 @@ const ReactForm = () => {
         if (selectedCategory) {
             categoryFields.forEach((field) => {
                 setValue(field, selectedCategory[field])
+            })
+        } else {
+            categoryFields.forEach((field) => {
+                setValue(field, '')
             })
         }
     }, [selectedCategory])
@@ -141,6 +164,7 @@ const ReactForm = () => {
                         <button
                             type="button"
                             className={`${styles.btn} ${styles.btnCancel}`}
+                            onClick={() => goBackToCategoryForm()}
                         >
                             Cancel
                         </button>
@@ -151,4 +175,4 @@ const ReactForm = () => {
     )
 }
 
-export default ReactForm
+export default CategoryReactForm
