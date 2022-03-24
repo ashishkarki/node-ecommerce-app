@@ -2,7 +2,7 @@ import create from 'zustand'
 
 import { URLs } from '../../constants-web'
 
-const deleteCategory = async (id) => {
+const deleteCategoryHelper = async (id) => {
     try {
         const response = await fetch(`${URLs.CATEGORIES}${id}`, {
             method: 'DELETE',
@@ -17,9 +17,29 @@ const deleteCategory = async (id) => {
     }
 }
 
+const updateCategoryHelper = async (id, data) => {
+    try {
+        const response = await fetch(`${URLs.CATEGORIES}${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        const updatedCategory = await response.json()
+
+        return updatedCategory
+    } catch (error) {
+        console.log(
+            `Ecommerce Web => error updating category: ${error.message}`
+        )
+    }
+}
+
 const useStore = create((set) => ({
     categories: [],
     selectedCategory: null,
+
     initCategories: async () => {
         const response = await fetch(URLs.CATEGORIES)
         const data = await response.json()
@@ -30,6 +50,16 @@ const useStore = create((set) => ({
         }))
     },
 
+    getCategoryById: async (id) => {
+        const response = await fetch(`${URLs.CATEGORIES}${id}`)
+        const category = await response.json()
+
+        await set((state) => ({
+            ...state,
+            selectedCategory: category,
+        }))
+    },
+
     addCategory: (category) => {
         set((state) => ({
             categories: [...state.categories, category],
@@ -37,7 +67,7 @@ const useStore = create((set) => ({
     },
 
     deleteCategory: async (id) => {
-        const response = await deleteCategory(id)
+        const response = await deleteCategoryHelper(id)
         console.log('deleted data :>> ', response)
 
         set((state) => ({
@@ -47,13 +77,17 @@ const useStore = create((set) => ({
         }))
     },
 
-    getCategoryById: async (id) => {
-        const response = await fetch(`${URLs.CATEGORIES}${id}`)
-        const category = await response.json()
+    updateCategory: async (id, categoryToUpdate) => {
+        const finallyUpdatedCat = await updateCategoryHelper(
+            id,
+            categoryToUpdate
+        )
+        console.log('updated data :>> ', finallyUpdatedCat)
 
-        await set((state) => ({
-            ...state,
-            selectedCategory: category,
+        set((state) => ({
+            categories: state.categories.map((category) =>
+                category.id === id ? finallyUpdatedCat : category
+            ),
         }))
     },
 }))

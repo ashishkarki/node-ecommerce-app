@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useLocation, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CATEGORIES_TABLE_COLUMNS, FORM_MODE } from '../../../constants-web'
 import { useCategoryStore } from '../../stores/categoryStore'
 
@@ -9,7 +9,7 @@ import styles from './ReactForm.module.css'
 const ReactForm = () => {
     // router related
     const { categoryId, formMode } = useParams()
-    const location = useLocation()
+    const navigate = useNavigate()
 
     // react hooks form related
     const { register, handleSubmit, setValue, formState } = useForm()
@@ -17,14 +17,19 @@ const ReactForm = () => {
     // zustand state related
     const getCategoryById = useCategoryStore((state) => state.getCategoryById)
     const selectedCategory = useCategoryStore((state) => state.selectedCategory)
+    const updateCategory = useCategoryStore((state) => state.updateCategory)
 
     // get field names (from Db) for the columns of category table
     const categoryFields = CATEGORIES_TABLE_COLUMNS.map(
         (column) => column.accessor
     )
 
-    const onSubmit = (data) => {
-        console.log('data :>> ', data)
+    const onSubmit = (categoryToUpdate) => {
+        console.log('update category data :>> ', categoryToUpdate)
+        updateCategory(categoryId, categoryToUpdate)
+
+        // go back to categoryList table
+        navigate('/categories')
     }
 
     useEffect(() => {
@@ -134,7 +139,7 @@ const ReactForm = () => {
                         </button>
 
                         <button
-                            type="submit"
+                            type="button"
                             className={`${styles.btn} ${styles.btnCancel}`}
                         >
                             Cancel

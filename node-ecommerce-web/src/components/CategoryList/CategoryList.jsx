@@ -16,6 +16,11 @@ const CategoryList = () => {
     const deleteCategory = useCategoryStore((state) => state.deleteCategory)
     const isAdminUser = useUserStore((state) => state.isAdmin)
 
+    const deleteCategoryWithConfirmation = (catIdToDelete) => {
+        confirm('Are you sure you want to delete this category?') &&
+            deleteCategory(catIdToDelete)
+    }
+
     useEffect(() => {
         initCategories()
     }, [])
@@ -44,7 +49,7 @@ const CategoryList = () => {
                           <button
                               className="bg-red-400 px-2 py-1 ash-rounded"
                               onClick={() => {
-                                  deleteCategory(value)
+                                  deleteCategoryWithConfirmation(value)
                               }}
                           >
                               Delete
