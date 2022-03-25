@@ -13,10 +13,27 @@ const productRouter = express.Router()
 // routes
 // get all products
 productRouter.get(`/`, async (req, res) => {
+    // use query parameter to  filter products like so
+    // /api/products?category=5f4b8d8f8b8f8b8f8b8f8f8f
+
     try {
-        const allProducts = await ProductModel.find().select(
-            'id name description category price image countInStock brand rating numReviews isFeatured'
+        let filterCategories = {}
+        if (req.query.categories) {
+            filterCategories = {
+                category: req.query.categories.split(','),
+            }
+        }
+        console.log(`object: ${JSON.stringify(filterCategories)}`)
+        const allProducts = await ProductModel.find(
+            // {
+            //     category: [req.query.category1, category2],
+            // }
+            filterCategories
         )
+            .select(
+                'id name description category price image countInStock brand rating numReviews isFeatured'
+            )
+            .populate('category')
 
         responseBuilder(res, StatusCodes.OK, allProducts)
     } catch (err) {
