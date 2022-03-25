@@ -31,6 +31,10 @@
     .ash-txt-highlight {
         @apply text-blue-500;
     }
+
+    .ash-btn-primary {
+        @apply bg-green-400 px-2 py-1 ash-rounded hover:ring-2;
+    }
 }
 
 /* reference: https://play.tailwindcss.com/oOpq1MifsS */

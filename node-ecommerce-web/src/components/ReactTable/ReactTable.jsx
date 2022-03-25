@@ -12,7 +12,7 @@ const ReactTable = ({ columns, data }) => {
     } = useTable({ columns, data })
 
     return (
-        <table {...getTableProps()} className="min-w-full">
+        <table {...getTableProps()} className="xs:max-w-min sm:w-1/2 md:w-full">
             <thead className="ash-bg">
                 <tr className="">
                     {headers.map((header) => (

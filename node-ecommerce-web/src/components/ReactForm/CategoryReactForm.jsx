@@ -32,14 +32,14 @@ const CategoryReactForm = () => {
         navigate('/categories')
     }
 
-    const onSubmit = (categoryFromForm) => {
+    const onSubmit = async (categoryFromForm) => {
         console.log(`edit or create: ${formMode}`)
 
         if (formMode === FORM_MODE.EDIT) {
-            updateCategory(categoryId, categoryFromForm)
+            await updateCategory(categoryId, categoryFromForm)
         } else {
             // everything else will be considered as create
-            addCategory(categoryFromForm)
+            await addCategory(categoryFromForm)
         }
 
         // reset selectedCategory if set
