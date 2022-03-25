@@ -135,6 +135,36 @@ productRouter.delete(`/:id`, async (req, res) => {
     }
 })
 
+// get count stats
+productRouter.get(`/stats/get/count`, async (req, res) => {
+    try {
+        const count = await ProductModel.countDocuments()
+
+        responseBuilder(res, StatusCodes.OK, count)
+    } catch (err) {
+        responseBuilder(res, StatusCodes.INTERNAL_SERVER_ERROR, [], true, err)
+    }
+})
+
+// get featured products
+productRouter.get(`/get/featured/:limit?`, async (req, res) => {
+    try {
+        const featuredProducts = await ProductModel.find({
+            isFeatured: true,
+        })
+            .select(
+                'id name description category price image countInStock brand rating numReviews isFeatured'
+            )
+            .limit(+req.params.limit || 3)
+
+        responseBuilder(res, StatusCodes.OK, featuredProducts)
+    } catch (error) {
+        responseBuilder(res, StatusCodes.INTERNAL_SERVER_ERROR, [], true, {
+            message: `Error getting featured products`,
+        })
+    }
+})
+
 const validateCategoryHelper = async (categoryId) => {
     try {
         const categoryForThisProduct = await Category.findById(categoryId)
