@@ -16,9 +16,9 @@ const CategoryList = () => {
     const deleteCategory = useCategoryStore((state) => state.deleteCategory)
     const isAdminUser = useUserStore((state) => state.isAdmin)
 
-    const deleteCategoryWithConfirmation = (catIdToDelete) => {
+    const deleteCategoryWithConfirmation = async (catIdToDelete) => {
         confirm('Are you sure you want to delete this category?') &&
-            deleteCategory(catIdToDelete)
+            (await deleteCategory(catIdToDelete))
     }
 
     useEffect(() => {
@@ -35,7 +35,7 @@ const CategoryList = () => {
                   Cell: ({ value }) => (
                       <div className="flex justify-evenly items-center">
                           <button
-                              className="bg-green-400 px-2 py-1 ash-rounded"
+                              className="ash-btn-primary"
                               onClick={() => {
                                   console.log('edit:', { value })
                                   navigate(
@@ -70,7 +70,7 @@ const CategoryList = () => {
             {isAdminUser && (
                 <button
                     type="submit"
-                    className="bg-green-400 px-2 py-1 mb-2 ash-rounded float-right"
+                    className="ash-btn-primary mb-2 float:left md:float-right"
                     onClick={() =>
                         navigate(`/categories/null/${FORM_MODE.CREATE}`)
                     }
