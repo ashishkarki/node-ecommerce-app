@@ -49,7 +49,7 @@ userRouter.get('/:id', async (req, res) => {
     }
 })
 
-// post a user
+// Create a user
 userRouter.post('/', async (req, res) => {
     const newUser = new UserModel({
         ...req.body,
@@ -99,6 +99,7 @@ userRouter.post(COMPONENT_SUB_PATHS.LOGIN, async (req, res) => {
                 const token = jwt.sign(
                     {
                         userId: user.id,
+                        isAdmin: user.isAdmin,
                     },
                     process.env.JWT_SECRET,
                     {
