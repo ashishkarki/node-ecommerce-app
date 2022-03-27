@@ -20,14 +20,19 @@ app.use(express.static('public'))
 // routers
 const urlPrefix = process.env.EXPRESS_API_URL_PREFIX || '/api'
 
-// products router
+// product router
 const productRouter = require('./routes/product')
 const productRoute = `${urlPrefix}${COMPONENT_PATHS.PRODUCTS}`
 app.use(productRoute, productRouter)
 
-// categories router
+// category router
 const categoryRouter = require('./routes/categories')
 const categoryRoute = `${urlPrefix}${COMPONENT_PATHS.CATEGORIES}`
 app.use(categoryRoute, categoryRouter)
+
+// user router
+const userRouter = require('./routes/user')
+const userRoute = `${urlPrefix}${COMPONENT_PATHS.USERS}`
+app.use(userRoute, userRouter)
 
 module.exports = app

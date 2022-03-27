@@ -9,10 +9,16 @@ const redBgGray = ck.red.bgGray
 // sub-paths
 const COMPONENT_PATHS = {
     HOME: '/',
+
     PRODUCTS: '/products',
     PRODUCT: '/products/:id',
+
     CATEGORIES: '/categories',
     CATEGORY: '/categories/:id',
+
+    USERS: '/users',
+    USER: '/users/:id',
+
     ORDER: '/orders/:id',
 }
 
@@ -20,6 +26,7 @@ const COMPONENT_PATHS = {
 const MONGOOSE_MODEL_NAMES = {
     PRODUCT: 'Product',
     CATEGORY: 'Category',
+    USER: 'User',
 }
 
 // functions
