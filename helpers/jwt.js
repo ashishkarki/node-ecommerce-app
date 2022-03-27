@@ -40,6 +40,7 @@ function authJwt() {
 }
 
 /**
+ * [Bit extreme] Revoke the token if anyone other than an Admin tries to access a protected route
  *
  * @param req The express request object.
  * @param payload data inside the token

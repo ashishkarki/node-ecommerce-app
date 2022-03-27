@@ -11,6 +11,26 @@ const userRouter = express.Router()
 
 //ROUTES
 
+// get user count
+userRouter.get('/stats/count', async (req, res) => {
+    try {
+        const count = await UserModel.countDocuments()
+        return responseBuilder(res, StatusCodes.OK, {
+            totalUsers: count,
+        })
+    } catch (err) {
+        return responseBuilder(
+            res,
+            StatusCodes.INTERNAL_SERVER_ERROR,
+            [],
+            true,
+            {
+                message: err.message,
+            }
+        )
+    }
+})
+
 // get all users
 userRouter.get('/', async (req, res) => {
     const usersList = await UserModel.find().select('-passwordHash')
