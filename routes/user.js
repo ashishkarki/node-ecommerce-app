@@ -1,7 +1,8 @@
 const bcryptjs = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const express = require('express')
 const { StatusCodes } = require('http-status-codes')
-const { responseBuilder } = require('../constants')
+const { responseBuilder, COMPONENT_SUB_PATHS } = require('../constants')
 
 const UserModel = require('../models/user')
 
@@ -52,7 +53,7 @@ userRouter.get('/:id', async (req, res) => {
 userRouter.post('/', async (req, res) => {
     const newUser = new UserModel({
         ...req.body,
-        passwordHash: bcryptjs.hashSync(req.body.password, 10),
+        passwordHash: await bcryptjs.hash(req.body.password, 10),
     })
 
     try {
@@ -64,6 +65,91 @@ userRouter.post('/', async (req, res) => {
             })
         } else {
             return responseBuilder(res, StatusCodes.OK, savedUser)
+        }
+    } catch (err) {
+        return responseBuilder(
+            res,
+            StatusCodes.INTERNAL_SERVER_ERROR,
+            [],
+            true,
+            err
+        )
+    }
+})
+
+// login user
+userRouter.post(COMPONENT_SUB_PATHS.LOGIN, async (req, res) => {
+    const { email, password } = req.body
+
+    try {
+        const user = await UserModel.findOne({ email })
+
+        if (!user) {
+            return responseBuilder(res, StatusCodes.NOT_FOUND, [], true, {
+                message: 'User not found for email: ' + email,
+            })
+        } else {
+            const matchedPw = await bcryptjs.compare(
+                password ?? '',
+                user.passwordHash
+            )
+
+            if (matchedPw) {
+                // also generate a token for user to sign back in
+                const token = jwt.sign(
+                    {
+                        userId: user.id,
+                    },
+                    process.env.JWT_SECRET,
+                    {
+                        expiresIn: '1d',
+                    }
+                )
+
+                return responseBuilder(res, StatusCodes.OK, {
+                    user: user.email,
+                    token,
+                })
+            } else {
+                return responseBuilder(
+                    res,
+                    StatusCodes.UNAUTHORIZED,
+                    [],
+                    true,
+                    {
+                        message: 'Invalid Credentials!!',
+                    }
+                )
+            }
+        }
+    } catch (err) {
+        return responseBuilder(
+            res,
+            StatusCodes.INTERNAL_SERVER_ERROR,
+            [],
+            true,
+            err
+        )
+    }
+})
+
+// delete a user
+userRouter.delete('/:id', async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const user = await UserModel.findById(id)
+
+        if (!user) {
+            return responseBuilder(res, StatusCodes.NOT_FOUND, [], true, {
+                message: 'User not found for id: ' + id,
+            })
+        } else {
+            const deletedUser = await UserModel.findByIdAndDelete(id)
+
+            return responseBuilder(res, StatusCodes.OK, {
+                message: `User with id: ${deletedUser.id} deleted`,
+            })
         }
     } catch (err) {
         return responseBuilder(
