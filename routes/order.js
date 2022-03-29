@@ -71,10 +71,34 @@ orderRouter.post('/', async (req, res) => {
                 return newOrderItem.id
             })
         )
+        const orderItemIds = await orderItemIdPromises
+
+        const totalPricePromises = Promise.all(
+            orderItemIds.map(async (oItemId) => {
+                const orderItemObjWithProductPrice =
+                    await OrderItemModel.findById(oItemId).populate(
+                        'product',
+                        'price'
+                    )
+
+                const totalPriceForThisItem =
+                    orderItemObjWithProductPrice.product.price *
+                    orderItemObjWithProductPrice.quantity
+
+                return totalPriceForThisItem
+            })
+        )
+        const totalPrices = (await totalPricePromises).reduce(
+            (acc, curValue) => acc + curValue,
+            0
+        )
+
+        console.log(totalPrices)
 
         const newOrder = new OrderModel({
             ...req.body,
-            orderItems: await orderItemIdPromises,
+            orderItems: orderItemIds,
+            totalPrice: totalPrices,
         })
         const savedOrder = await newOrder.save()
 
