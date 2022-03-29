@@ -34,6 +34,8 @@ const MONGOOSE_MODEL_NAMES = {
     PRODUCT: 'Product',
     CATEGORY: 'Category',
     USER: 'User',
+    ORDER: 'Order',
+    ORDER_ITEM: 'OrderItem',
 }
 
 // functions
