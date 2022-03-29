@@ -10,6 +10,10 @@ const orderItemSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: MONGOOSE_MODEL_NAMES.PRODUCT,
     },
+    // order: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: MONGOOSE_MODEL_NAMES.ORDER,
+    // },
 })
 
 orderItemSchema.virtual('id').get(function () {

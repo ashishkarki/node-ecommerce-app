@@ -46,4 +46,9 @@ const userRouter = require('./routes/user')
 const userRoute = `${urlPrefix}${COMPONENT_PATHS.USERS}`
 app.use(userRoute, userRouter)
 
+// order router
+const orderRouter = require('./routes/order')
+const orderRoute = `${urlPrefix}${COMPONENT_PATHS.ORDERS}`
+app.use(orderRoute, orderRouter)
+
 module.exports = app

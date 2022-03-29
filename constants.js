@@ -19,6 +19,7 @@ const COMPONENT_PATHS = {
     USERS: '/users',
     USER: '/users/:id',
 
+    ORDERS: '/orders',
     ORDER: '/orders/:id',
 }
 const COMPONENT_SUB_PATHS = {

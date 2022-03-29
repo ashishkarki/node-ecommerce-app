@@ -3,6 +3,13 @@ const mongoose = require('mongoose')
 const { MONGOOSE_MODEL_NAMES } = require('../constants')
 
 const orderSchema = new mongoose.Schema({
+    orderItems: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: MONGOOSE_MODEL_NAMES.ORDER_ITEM,
+            required: true,
+        },
+    ],
     shippingAddress1: {
         type: String,
         required: true,
@@ -44,7 +51,9 @@ const orderSchema = new mongoose.Schema({
     },
 })
 
-orderSchema.virtual('id').get(() => this._id.toHexString())
+orderSchema.virtual('id').get(function () {
+    return this._id.toHexString()
+})
 
 orderSchema.set('toJSON', {
     virtuals: true,
