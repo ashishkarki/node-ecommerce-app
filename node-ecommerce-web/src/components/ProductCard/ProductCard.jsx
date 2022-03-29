@@ -31,7 +31,7 @@ const ProductCard = ({ product }) => {
                 >
                     Cat ID:{' '}
                     <span className="ash-txt-highlight">
-                        {product.category}
+                        {product.category?.id}
                     </span>
                 </p>
             </div>

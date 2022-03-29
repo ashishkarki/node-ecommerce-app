@@ -2,7 +2,7 @@ const express = require('express')
 const { StatusCodes } = require('http-status-codes')
 const { responseBuilder } = require('../constants')
 
-const { Category, CategoryModel } = require('../models/category')
+const { CategoryModel } = require('../models/category')
 
 // category router
 const categoryRouter = express.Router()

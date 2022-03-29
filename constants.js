@@ -9,17 +9,31 @@ const redBgGray = ck.red.bgGray
 // sub-paths
 const COMPONENT_PATHS = {
     HOME: '/',
+
     PRODUCTS: '/products',
     PRODUCT: '/products/:id',
+
     CATEGORIES: '/categories',
     CATEGORY: '/categories/:id',
+
+    USERS: '/users',
+    USER: '/users/:id',
+
     ORDER: '/orders/:id',
+}
+const COMPONENT_SUB_PATHS = {
+    LOGIN: '/login',
+    LOGOUT: '/logout',
+    REGISTER: '/register',
+    FORGOT_PASSWORD: '/forgot-password',
+    RESET_PASSWORD: '/reset-password',
 }
 
 // model string names
 const MONGOOSE_MODEL_NAMES = {
     PRODUCT: 'Product',
     CATEGORY: 'Category',
+    USER: 'User',
 }
 
 // functions
@@ -45,6 +59,7 @@ module.exports = {
     lg,
 
     COMPONENT_PATHS,
+    COMPONENT_SUB_PATHS,
     MONGOOSE_MODEL_NAMES,
 
     blueBgWhite,

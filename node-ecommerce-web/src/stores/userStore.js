@@ -8,7 +8,7 @@ const useStore = create((set) => ({
     },
     isAdmin: false,
     initAdminUser: async () => {
-        set((state) => ({
+        await set((state) => ({
             ...state,
             isLoggedIn: true,
             user: {
