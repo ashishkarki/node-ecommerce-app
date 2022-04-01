@@ -28,6 +28,10 @@ function authJwt() {
                 methods: ['GET', 'OPTIONS'],
             },
             {
+                url: /(.*)\/uploads\/(.*)/,
+                methods: ['GET', 'OPTIONS'],
+            },
+            {
                 url: /\/api\/v1\/ecommerce\/categories(.*)/,
                 methods: ['GET', 'OPTIONS'],
             },

@@ -19,6 +19,7 @@ const COMPONENT_PATHS = {
     USERS: '/users',
     USER: '/users/:id',
 
+    ORDERS: '/orders',
     ORDER: '/orders/:id',
 }
 const COMPONENT_SUB_PATHS = {
@@ -34,6 +35,8 @@ const MONGOOSE_MODEL_NAMES = {
     PRODUCT: 'Product',
     CATEGORY: 'Category',
     USER: 'User',
+    ORDER: 'Order',
+    ORDER_ITEM: 'OrderItem',
 }
 
 // functions

@@ -3,8 +3,7 @@ const { StatusCodes } = require('http-status-codes')
 const mongoose = require('mongoose')
 
 const { responseBuilder } = require('../constants')
-const { CategoryModel: Category, CategoryModel } = require('../models/category')
-
+const { CategoryModel } = require('../models/category')
 const ProductModel = require('../models/product')
 
 // the router
@@ -46,7 +45,7 @@ productRouter.get(`/:id`, async (req, res) => {
     // before first check if this id is valid
     if (!mongoose.isValidObjectId(req.params.id)) {
         return responseBuilder(res, StatusCodes.BAD_REQUEST, [], true, {
-            message: `Invalid id: ${req.params.id}`,
+            message: `Invalid Product id: ${req.params.id}`,
         })
     }
 
@@ -184,7 +183,7 @@ productRouter.get(`/get/featured/:limit?`, async (req, res) => {
 
 const validateCategoryHelper = async (categoryId) => {
     try {
-        const categoryForThisProduct = await Category.findById(categoryId)
+        const categoryForThisProduct = await CategoryModel.findById(categoryId)
 
         if (!categoryForThisProduct) {
             return Promise.reject({
