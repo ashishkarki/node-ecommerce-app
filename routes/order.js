@@ -212,6 +212,62 @@ const saveOrderItem = async (orderItem) => {
     return savedOrderItem
 }
 
+// 6. Total sales in the whole eshop - irrespective of user/customer
+orderRouter.get('/stats/totalSales', async (req, res) => {
+    responseBuilderWrapper(async () => {
+        const totalSales = await OrderModel.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    totalSales: { $sum: '$totalPrice' },
+                },
+            },
+        ])
+
+        if (!totalSales) {
+            return responseBuilder(res, StatusCodes.NOT_FOUND, [], true, {
+                message: `Error getting total sales`,
+            })
+        } else {
+            responseBuilder(res, StatusCodes.OK, {
+                totalSalesOfWholeShop: totalSales.pop().totalSales,
+            })
+        }
+    })
+})
+
+// 7. history of a particular user's orders
+orderRouter.get('/stats/:userId/history', async (req, res) => {
+    // before first check if this id is valid
+    if (!mongoose.isValidObjectId(req.params.userId)) {
+        return responseBuilder(res, StatusCodes.BAD_REQUEST, [], true, {
+            message: `Invalid User id: ${req.params.userId}`,
+        })
+    }
+
+    responseBuilderWrapper(async () => {
+        const userOrders = await OrderModel.find({
+            user: req.params.userId,
+        })
+            .populate({
+                path: 'orderItems',
+                populate: {
+                    path: 'product',
+                    populate: 'category',
+                },
+            })
+            .sort({ dateOrdered: -1 })
+
+        if (!userOrders) {
+            return responseBuilder(res, StatusCodes.NOT_FOUND, [], true, {
+                message: `Error getting user orders`,
+            })
+        } else {
+            responseBuilder(res, StatusCodes.OK, userOrders)
+        }
+    })
+})
+
 // Helper funciton to delete OrderItem while deleting the parent Order
 const deleteOrderItem = async (orderItemId) => {
     // console.log(`orderItemId: ${orderItemId}`)
